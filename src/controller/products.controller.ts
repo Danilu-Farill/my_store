@@ -4,9 +4,9 @@ import { IProduct } from "../interface/users.interface";
 
 export const getProduct = async(req: Request, resp: Response): Promise<void> => {
   try {
+    const product: IProduct[] = [];
     const { size } = req.query;
     const limit:number = size ? parseInt(size as string, 10): 2; //para llamarlo debe ser con el size http://localhost:4000/users?size=10
-    const product: IProduct[] = [];
 
     for (let index = 0; index < limit; index++) {
       product.push({
