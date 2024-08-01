@@ -1,22 +1,27 @@
 import { Request, Response } from "express";
-import { faker } from "@faker-js/faker";
+import { ProductService } from "./../service/product.service";
 import { IProduct } from "../interface/users.interface";
+// import { faker } from "@faker-js/faker";
+
+const service = new ProductService();
+//const service: ProductService = new ProductService(); puede ser cualquiera de las dos
 
 export const getProduct = async(req: Request, resp: Response): Promise<void> => {
   try {
-    const product: IProduct[] = [];
-    const { size } = req.query;
-    const limit:number = size ? parseInt(size as string, 10): 2; //para llamarlo debe ser con el size http://localhost:4000/users?size=10
+    // const products: IProduct[] = [];
+    // const { size } = req.query;
+    // const limit:number = size ? parseInt(size as string, 10): 2; //para llamarlo debe ser con el size http://localhost:4000/users?size=10
 
-    for (let index = 0; index < limit; index++) {
-      product.push({
-        //id: faker.commerce.isbn(),
-        name: faker.commerce.productName(),
-        price: parseInt(faker.commerce.price(), 10),
-        image: faker.image.imageUrl()
-      });   
-    }
-    resp.json({product}).status(200);
+    // for (let index = 0; index < limit; index++) {
+    //   products.push({
+    //   //id: faker.commerce.isbn(),
+    //     name: faker.commerce.productName(),
+    //     price: parseInt(faker.commerce.price(), 10),
+    //     image: faker.image.imageUrl()
+    //   });   
+    // }
+    const products: IProduct[] = service.find();
+    resp.json({products}).status(200);
   } catch (error) {
     resp.send('ERROR').status(500);     
   }
